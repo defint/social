@@ -5,7 +5,11 @@ Route::get('/',[
     'as' => 'home'
 ]);
 
-Route::get('/alert',function()
-{
-    return redirect()->route('home')->with('info','Welcome!');
-});
+Route::get('/signup', [
+    'uses' => '\Social\Http\Controllers\AuthController@getSignup',
+    'as' => 'auth.signup'
+]);
+
+Route::post('/signup', [
+    'uses' => '\Social\Http\Controllers\AuthController@postSignup'
+]);
