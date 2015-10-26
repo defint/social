@@ -10,12 +10,18 @@ class AuthController extends Controller
 {
     public function getSignin()
     {
-      return view('auth.signin');
+        if(!Auth::check())
+            return view('auth.signin');
+        else
+            return redirect()->route('home');
     }
     
     public function getSignup()
     {
-        return view('auth.signup');
+        if(!Auth::check())
+            return view('auth.signup');
+        else
+            return redirect()->route('home');
     }
 
     public function postSignin(Request $request)
@@ -48,5 +54,12 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('home')->with('info','Your account has been created successfully');
+    }
+
+    public function getSignout()
+    {
+        Auth::logout();
+
+        return redirect()->route('home');
     }
 }
