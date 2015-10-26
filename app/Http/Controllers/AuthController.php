@@ -2,16 +2,37 @@
 
 namespace Social\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Social\Models\User;
 
 class AuthController extends Controller
 {
+    public function getSignin()
+    {
+      return view('auth.signin');
+    }
+    
     public function getSignup()
     {
-        return view('templates.signup');
+        return view('auth.signup');
     }
 
+    public function postSignin(Request $request)
+    {
+        $this->validate($request,[
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6',
+        ]);
+
+        if(!Auth::attempt($request->only(['email','password']),$request->has('remember')))
+        {
+            return redirect()->back()->with('info','Could not signed you in');
+        }
+
+        return redirect()->route('home')->with('info','Your are now signed in');
+    }
+    
     public function postSignup(Request $request)
     {
         $this->validate($request,[

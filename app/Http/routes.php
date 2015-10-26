@@ -13,3 +13,13 @@ Route::get('/signup', [
 Route::post('/signup', [
     'uses' => '\Social\Http\Controllers\AuthController@postSignup'
 ]);
+
+Route::get('/signin', [
+    'uses' => '\Social\Http\Controllers\AuthController@getSignin',
+    'as' => 'auth.signin'
+]);
+
+Route::post('/signin', [
+    'uses' => '\Social\Http\Controllers\AuthController@postSignin'
+]);
+
